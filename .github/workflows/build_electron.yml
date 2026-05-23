@@ -7,26 +7,26 @@ on:
 
 jobs:
   build-windows:
-    runs-on: windows-latest # 💡 核心：在云端 Windows 环境下打包
+    runs-on: windows-latest # 在云端 Windows 环境下打包
 
     steps:
-    # 1. 升级为 v4 版本
+    # 1. 拉取源代码
     - name: 拉取源代码
       uses: actions/checkout@v4
 
-    # 2. 💡 终极解决：升级 Node 版本为 22，提供最新的 crypto.hash 原生 API 支持
+    # 2. 配置 Node.js 22 最新版环境
     - name: 配置 Node.js 环境
       uses: actions/setup-node@v4
       with:
         node-version: 22
 
-    # 3. 安装项目依赖
+    # 3. 安装项目全部依赖
     - name: 安装项目依赖
       run: npm install
 
-    # 4. 编译并打包 Electron
-    - name: 编译并打包 Electron
-      run: npm run build
+    # 4. 💡 终极解决：使用项目的专属打包命令 build:win 生成 exe 文件
+    - name: 编译并打包 Windows EXE
+      run: npm run build:win
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
